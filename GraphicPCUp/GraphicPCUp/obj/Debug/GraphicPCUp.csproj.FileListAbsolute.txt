@@ -1,0 +1,10 @@
+C:\Users\kylae\source\repos\GraphicPCUp\GraphicPCUp\bin\Debug\GraphicPCUp.exe.config
+C:\Users\kylae\source\repos\GraphicPCUp\GraphicPCUp\bin\Debug\GraphicPCUp.exe
+C:\Users\kylae\source\repos\GraphicPCUp\GraphicPCUp\bin\Debug\GraphicPCUp.pdb
+C:\Users\kylae\source\repos\GraphicPCUp\GraphicPCUp\obj\Debug\GraphicPCUp.csproj.AssemblyReference.cache
+C:\Users\kylae\source\repos\GraphicPCUp\GraphicPCUp\obj\Debug\GraphicPCUp.Form1.resources
+C:\Users\kylae\source\repos\GraphicPCUp\GraphicPCUp\obj\Debug\GraphicPCUp.Properties.Resources.resources
+C:\Users\kylae\source\repos\GraphicPCUp\GraphicPCUp\obj\Debug\GraphicPCUp.csproj.GenerateResource.cache
+C:\Users\kylae\source\repos\GraphicPCUp\GraphicPCUp\obj\Debug\GraphicPCUp.csproj.CoreCompileInputs.cache
+C:\Users\kylae\source\repos\GraphicPCUp\GraphicPCUp\obj\Debug\GraphicPCUp.exe
+C:\Users\kylae\source\repos\GraphicPCUp\GraphicPCUp\obj\Debug\GraphicPCUp.pdb
