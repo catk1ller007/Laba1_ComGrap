@@ -18,6 +18,13 @@ using Trasform;
 using Blur;
 using Gays;
 using Sharpness;
+using Motion;
+using Sobel;
+using Erosia;
+using Dilat;
+using Priwit;
+using Shara;
+using Cray;
 
 namespace GraphicPCUp
 {
@@ -225,9 +232,49 @@ namespace GraphicPCUp
             Filtres filter = new MotionBlur();
             backgroundWorker1.RunWorkerAsync(filter);
         }
-        private void dilatonToolStripMenuItem_Click(object sender, EventArgs e)
+        private void dilatonToolStripMenuItem_Click_1(object sender, EventArgs e)
         {
-            Filtres filter = new Dilaton();
+            Filtres filter = new Dilation();
+            backgroundWorker1.RunWorkerAsync(filter);
+        }
+        private void erosionToolStripMenuItem_Click_1(object sender, EventArgs e)
+        {
+            Filtres filter = new Erosion();
+            backgroundWorker1.RunWorkerAsync(filter);
+        }
+        private void openingToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Filtres filter = new Opening();
+            backgroundWorker1.RunWorkerAsync(filter);
+        }
+        private void closingToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Filtres filter = new Closing();
+            backgroundWorker1.RunWorkerAsync(filter);
+        }
+        private void приToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Filtres filter = new PrewittFilter();
+            backgroundWorker1.RunWorkerAsync(filter);
+        }
+        private void щараToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Filtres filter = new SharaFilter();
+            backgroundWorker1.RunWorkerAsync(filter);
+        }
+        private void светКрайToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Canny_edge_detection canny = new Canny_edge_detection();
+
+            Bitmap bmp = new Bitmap(pictureBox1.Image);
+            Bitmap resultImahe = canny.edge_detection_by_Canny(bmp);
+
+            pictureBox2.Image = resultImahe;
+            pictureBox2.Invalidate();
+        }
+        private void поворотToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            Filtres filter = new turn();
             backgroundWorker1.RunWorkerAsync(filter);
         }
 
@@ -257,16 +304,7 @@ namespace GraphicPCUp
             return Color.FromArgb(srcColorR, srcColorG, srcColorB);
         }
 
-        private void erosionToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            Filtres filter = new Erosion();
-            backgroundWorker1.RunWorkerAsync(filter);
-        }
-        private void поворотToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            Filtres filter = new turn(imageResult,0,0); 
-            backgroundWorker1.RunWorkerAsync(filter);
-        }
+        
     }
 }
 
@@ -275,232 +313,98 @@ namespace GraphicPCUp
 
 namespace LabaOneGraphics
 {
-    class SobelFilter : MatrixFilter
+    //abstract class MorphologiFilters : MatrixFilter
+    //    {
+    //        protected int size = 3;
+    //        protected int rad = 1;
+    //        protected Color white = Color.FromArgb(255, 255, 255);
+    //        protected Color black = Color.FromArgb(0, 0, 0);
+
+    //        protected int[,] kernel = new int[3, 3] {
+    //        {1,1,1},
+    //        {1,1,1},
+    //        {1,1,1},
+    //        };
+
+    //        protected MorphologiFilters() { }
+    //        public MorphologiFilters(int[,] kernel)
+    //        {
+    //            this.kernel = kernel;
+    //        }
+
+    //        public int Clamp(int value, int min, int max)
+    //        {
+    //            if (value < min)
+    //            {
+    //                return min;
+    //            }
+    //            if (value > max)
+    //            {
+    //                return max;
+    //            }
+
+    //            return value;
+    //        }
+
+    //        abstract protected bool getCond(Bitmap sourceImage, int i, int j);
+    //        abstract protected void setPixels(Bitmap sourceImage, Bitmap resultImage, int i, int j);
+    //        abstract protected Bitmap setStartImage(Bitmap sourceImage);
+
+    //        public Bitmap ProcessImage(Bitmap sourceImage, BackgroundWorker worker)
+    //        {
+    //            Bitmap resultImage = new Bitmap(setStartImage(sourceImage));
+
+    //            for (int i = rad; i < sourceImage.Width - rad; i++)
+    //            {
+    //                for (int j = rad; j < sourceImage.Height - rad; j++)
+    //                {
+    //                    worker.ReportProgress((int)((float)i / resultImage.Width + 100));
+
+    //                    if (worker.CancellationPending)
+    //                    {
+    //                        return null;
+    //                    }
+    //                    if (getCond(sourceImage, i, j))
+    //                    {
+    //                        setPixels(sourceImage, resultImage, i, j);
+    //                    }
+    //                }
+    //            }
+    //            return resultImage;
+    //        }
+
+    //    }
+    class Opening : Filtres
     {
-        public void SobelX()
+        protected override Color calculateNewPixelColor(Bitmap sourceImage, int x, int y)
         {
-            int sizeX = 3;
-            int sizeY = 3;
-            int[,] kernelX = new int[3, 3] {
-            {-1,0,1},
-            {-2,0,2},
-            {-1,0,1},
-            };
-
-            int[,] kernelY = new int[3, 3] {
-            {-1,-2,-1},
-            {0,0,0},
-            {1,2,1},
-            };
+            throw new NotImplementedException();
         }
-
+        public new Bitmap ProccesImage(Bitmap sourceImage, BackgroundWorker worker)
+        {
+            Filtres Erosion = new Erosion();
+            Filtres Dilation = new Dilation();
+            Bitmap resultImage = new Bitmap(sourceImage.Width, sourceImage.Height);
+            resultImage = Erosion.ProccesImage(sourceImage, worker);
+            resultImage = Dilation.ProccesImage(resultImage, worker);
+            return resultImage;
+        }
     }
-    class MotionBlur : MatrixFilter
+    class Closing : Filtres
     {
-        public MotionBlur()
+        protected override Color calculateNewPixelColor(Bitmap sourceImage, int x, int y)
         {
-            int sizeX = 100;
-            int sizeY = 100;
-            kernel = new float[sizeX, sizeY];
-            for (int i = 0; i < sizeX; i++)
-            {
-                for (int j = 0; j < sizeY; j++)
-                {
-                    if (i == j)
-                    {
-                        kernel[i, j] = 1 / sizeX;
-                    }
-                    else { kernel[i, j] = 0; }
-                }
-            }
+            throw new NotImplementedException();
         }
-        //public MotionBlur()
-        //{
-        //    int sizeX = 100;
-        //    int sizeY = 100;
-        //    kernel = new float[sizeX, sizeY];
-        //    for (int i = 0; i < sizeX; i++){
-        //        for (int j = 0; j < sizeY; j++)
-        //        {
-        //            if (i == j)
-        //            {
-        //                kernel[i, j] = 1 / sizeX;
-        //            }
-        //        }
-        //    }
-        //}
-
+        public new Bitmap ProccesImage(Bitmap sourceImage, BackgroundWorker worker)
+        {
+            Filtres Erosion = new Erosion();
+            Filtres Dilation = new Dilation();
+            Bitmap resultImage = new Bitmap(sourceImage.Width, sourceImage.Height);
+            resultImage = Dilation.ProccesImage(sourceImage, worker);
+            resultImage = Erosion.ProccesImage(resultImage, worker);
+            return resultImage;
+        }
     }
-    abstract class MorphologiFilters : MatrixFilter
-        {
-            protected int size = 3;
-            protected int rad = 1;
-            protected Color white = Color.FromArgb(255, 255, 255);
-            protected Color black = Color.FromArgb(0, 0, 0);
 
-            protected int[,] kernel = new int[3, 3] {
-            {1,1,1},
-            {1,1,1},
-            {1,1,1},
-            };
-
-            protected MorphologiFilters() { }
-            public MorphologiFilters(int[,] kernel)
-            {
-                this.kernel = kernel;
-            }
-
-            public int Clamp(int value, int min, int max)
-            {
-                if (value < min)
-                {
-                    return min;
-                }
-                if (value > max)
-                {
-                    return max;
-                }
-
-                return value;
-            }
-
-            abstract protected bool getCond(Bitmap sourceImage, int i, int j);
-            abstract protected void setPixels(Bitmap sourceImage, Bitmap resultImage, int i, int j);
-            abstract protected Bitmap setStartImage(Bitmap sourceImage);
-
-            public Bitmap ProcessImage(Bitmap sourceImage, BackgroundWorker worker)
-            {
-                Bitmap resultImage = new Bitmap(setStartImage(sourceImage));
-
-                for (int i = rad; i < sourceImage.Width - rad; i++)
-                {
-                    for (int j = rad; j < sourceImage.Height - rad; j++)
-                    {
-                        worker.ReportProgress((int)((float)i / resultImage.Width + 100));
-
-                        if (worker.CancellationPending)
-                        {
-                            return null;
-                        }
-                        if (getCond(sourceImage, i, j))
-                        {
-                            setPixels(sourceImage, resultImage, i, j);
-                        }
-                    }
-                }
-                return resultImage;
-            }
-
-        }
-    class Dilaton : MorphologiFilters
-        {
-            public Dilaton()
-            {
-
-            }
-
-            protected override Bitmap setStartImage(Bitmap sourceImage)
-            {
-                return sourceImage;
-            }
-
-            protected override bool getCond(Bitmap sourceImage, int i, int j)
-            {
-                bool cond = false;
-                if (sourceImage.GetPixel(i, j).R == 255)
-                {
-                    cond = true;
-                }
-                return cond;
-            }
-
-            protected override void setPixels(Bitmap sourceImage, Bitmap resultImage, int i, int j)
-            {
-                for (int k = i - rad; k < i + rad + 1; k++)
-                {
-                    for (int l = i - rad; l < i + rad + 1; l++)
-                    {
-                        resultImage.SetPixel(k, l, white);
-                    }
-                }
-            }
-
-
-        }
-    class Erosion : MorphologiFilters
-        {
-            public Erosion()
-            {
-
-            }
-
-            protected override Bitmap setStartImage(Bitmap sourceImage)
-            {
-                Bitmap newImage = new Bitmap(sourceImage.Height, sourceImage.Width);
-                for (int i = 0; i < sourceImage.Width; i++)
-                {
-                    for (int j = 0; j < sourceImage.Height; j++)
-                    {
-                        newImage.SetPixel(i, j, black);
-                    }
-                }
-                return newImage;
-            }
-
-            protected override bool getCond(Bitmap sourceImage, int i, int j)
-            {
-                bool cond = true;
-
-                for (int k = i - rad; k < i + rad + 1; k++)
-                {
-                    for (int l = j - rad; l < j + rad + 1; l++)
-                    {
-                        if ((sourceImage.GetPixel(k, l).R == 255 && kernel[k - i + rad, j - i + rad] == 1) || (sourceImage.GetPixel(k, l).R == 0 && kernel[k - i + rad, j - i + rad] == 0))
-                        {
-
-                        }
-                        else
-                        {
-                            cond = false;
-                            break;
-                        }
-                    }
-                    if (!cond)
-                    {
-                        break;
-                    }
-                }
-                return cond;
-            }
-
-            protected override void setPixels(Bitmap sourceImage, Bitmap resultImage, int i, int j)
-            {
-                resultImage.SetPixel(i, j, white);
-            }
-            protected override Color calculateNewPixelColor(Bitmap naitiImage, int x, int y)
-            {
-                return naitiImage.GetPixel(x, y);
-            }
-        }
 }
-
-
-
-
-//public int koef = 30;
-//protected override Color calculateNewPixelColor(Bitmap srcImage, int x, int y)
-//{
-//    int newX = Clamp(x + (int)(srcImage.Width * koef / 100), 0, srcImage.Width - 1);
-//    int newY = y;
-//    return srcImage.GetPixel(newX, newY);
-//}
-//protected override Color calculateNewPixelColor(Bitmap sourceColor, int x, int y)
-//{
-//    int newX = x + 100;
-//    //newX = Clamp(newX, 0, sourceColor.Width - 1);
-//    if (newX > sourceColor.Width - 100)
-//    {
-//        return Color.FromArgb(190, 190, 190);
-//    }
-//    return sourceColor.GetPixel(newX, y);
-//}

@@ -64,7 +64,14 @@
     </Compile>
     <Compile Include="MatrixFiltres\BlurFilter.cs" />
     <Compile Include="MatrixFiltres\Guauss.cs" />
+    <Compile Include="MatrixFiltres\MotionFilter.cs" />
+    <Compile Include="MatrixFiltres\PrewittFilter.cs" />
+    <Compile Include="MatrixFiltres\SharaFilter.cs" />
     <Compile Include="MatrixFiltres\sharpness.cs" />
+    <Compile Include="MatrixFiltres\SobelFilter.cs" />
+    <Compile Include="MatrixFiltres\SvetKray.cs" />
+    <Compile Include="MorphologicalFilter\Dilation.cs" />
+    <Compile Include="MorphologicalFilter\Erosion.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="template\template.cs" />
