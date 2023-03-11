@@ -25,7 +25,6 @@ using Dilat;
 using Priwit;
 using Shara;
 using Cray;
-
 namespace GraphicPCUp
 {
     public partial class Form1 : Form
@@ -378,7 +377,7 @@ namespace LabaOneGraphics
     {
         protected override Color calculateNewPixelColor(Bitmap sourceImage, int x, int y)
         {
-            throw new NotImplementedException();
+            return sourceImage.GetPixel(x, y);
         }
         public new Bitmap ProccesImage(Bitmap sourceImage, BackgroundWorker worker)
         {
