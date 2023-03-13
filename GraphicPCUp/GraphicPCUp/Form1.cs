@@ -20,13 +20,12 @@ using Gays;
 using Sharpness;
 using Motion;
 using Sobel;
-using Erosia;
-using Dilat;
 using Priwit;
 using Shara;
 using Cray;
 using Tisnenie;
 using Lin;
+using Preference;
 namespace GraphicPCUp
 {
     public partial class Form1 : Form
@@ -125,7 +124,7 @@ namespace GraphicPCUp
         }
         private void черноБелоеToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Filtres filter = new Black_White();
+            Filtres filter = new GrayFilter();
             backgroundWorker1.RunWorkerAsync(filter);
         }
         private void сепияToolStripMenuItem_Click(object sender, EventArgs e)
@@ -225,6 +224,7 @@ namespace GraphicPCUp
         }
 
 
+
         //-------------------- Мат морфология фильтр ----------------------//
         private void dilatonToolStripMenuItem_Click_1(object sender, EventArgs e)
         {
@@ -276,6 +276,13 @@ namespace GraphicPCUp
         {
             pictureBox1.Image = imageResult;
             pictureBox2.Image = null; 
+        }
+
+        private void опорныйЦветToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Color dest = colorDialog1.Color;
+            Filtres filter = new ReferenceCorrection(dest, Color.Gray);
+            backgroundWorker1.RunWorkerAsync(filter);
         }
     }
 }

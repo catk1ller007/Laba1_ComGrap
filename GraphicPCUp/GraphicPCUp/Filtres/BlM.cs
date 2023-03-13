@@ -8,7 +8,7 @@ using Template;
 
 namespace BLM
 {
-    class Black_White : Filtres
+    class GrayFilter : Filtres
     {
         protected override Color calculateNewPixelColor(Bitmap sourceImage, int x, int y)
         {

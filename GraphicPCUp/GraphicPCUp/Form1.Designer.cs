@@ -61,12 +61,14 @@ namespace GraphicPCUp
             this.closingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.topHatToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.blackHatToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.gradientToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.progressBar1 = new System.Windows.Forms.ProgressBar();
             this.Отмена = new System.Windows.Forms.Button();
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             this.button1 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
-            this.gradientToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.опорныйЦветToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.colorDialog1 = new System.Windows.Forms.ColorDialog();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             this.menuStrip1.SuspendLayout();
@@ -113,14 +115,14 @@ namespace GraphicPCUp
             // открытьToolStripMenuItem
             // 
             this.открытьToolStripMenuItem.Name = "открытьToolStripMenuItem";
-            this.открытьToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.открытьToolStripMenuItem.Size = new System.Drawing.Size(154, 22);
             this.открытьToolStripMenuItem.Text = "Открыть";
             this.открытьToolStripMenuItem.Click += new System.EventHandler(this.открытьToolStripMenuItem_Click);
             // 
             // сохранитьКакToolStripMenuItem
             // 
             this.сохранитьКакToolStripMenuItem.Name = "сохранитьКакToolStripMenuItem";
-            this.сохранитьКакToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.сохранитьКакToolStripMenuItem.Size = new System.Drawing.Size(154, 22);
             this.сохранитьКакToolStripMenuItem.Text = "Сохранить как";
             this.сохранитьКакToolStripMenuItem.Click += new System.EventHandler(this.сохранитьКакToolStripMenuItem_Click);
             // 
@@ -304,7 +306,8 @@ namespace GraphicPCUp
             // глобальныеToolStripMenuItem
             // 
             this.глобальныеToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.глобальноеРастяжениеГистограммыToolStripMenuItem});
+            this.глобальноеРастяжениеГистограммыToolStripMenuItem,
+            this.опорныйЦветToolStripMenuItem});
             this.глобальныеToolStripMenuItem.Name = "глобальныеToolStripMenuItem";
             this.глобальныеToolStripMenuItem.Size = new System.Drawing.Size(207, 22);
             this.глобальныеToolStripMenuItem.Text = "Глобальные";
@@ -372,6 +375,13 @@ namespace GraphicPCUp
             this.blackHatToolStripMenuItem1.Text = "Black hat";
             this.blackHatToolStripMenuItem1.Click += new System.EventHandler(this.blackHatToolStripMenuItem1_Click);
             // 
+            // gradientToolStripMenuItem
+            // 
+            this.gradientToolStripMenuItem.Name = "gradientToolStripMenuItem";
+            this.gradientToolStripMenuItem.Size = new System.Drawing.Size(122, 22);
+            this.gradientToolStripMenuItem.Text = "Gradient";
+            this.gradientToolStripMenuItem.Click += new System.EventHandler(this.gradientToolStripMenuItem_Click);
+            // 
             // progressBar1
             // 
             this.progressBar1.BackColor = System.Drawing.SystemColors.ActiveCaption;
@@ -428,12 +438,16 @@ namespace GraphicPCUp
             this.button2.UseVisualStyleBackColor = false;
             this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
-            // gradientToolStripMenuItem
+            // опорныйЦветToolStripMenuItem
             // 
-            this.gradientToolStripMenuItem.Name = "gradientToolStripMenuItem";
-            this.gradientToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.gradientToolStripMenuItem.Text = "Gradient";
-            this.gradientToolStripMenuItem.Click += new System.EventHandler(this.gradientToolStripMenuItem_Click);
+            this.опорныйЦветToolStripMenuItem.Name = "опорныйЦветToolStripMenuItem";
+            this.опорныйЦветToolStripMenuItem.Size = new System.Drawing.Size(275, 22);
+            this.опорныйЦветToolStripMenuItem.Text = "Опорный цвет";
+            this.опорныйЦветToolStripMenuItem.Click += new System.EventHandler(this.опорныйЦветToolStripMenuItem_Click);
+            // 
+            // colorDialog1
+            // 
+            this.colorDialog1.Color = System.Drawing.Color.Orange;
             // 
             // Form1
             // 
@@ -504,6 +518,8 @@ namespace GraphicPCUp
         private ToolStripMenuItem topHatToolStripMenuItem1;
         private ToolStripMenuItem blackHatToolStripMenuItem1;
         private ToolStripMenuItem gradientToolStripMenuItem;
+        private ToolStripMenuItem опорныйЦветToolStripMenuItem;
+        private ColorDialog colorDialog1;
     }
 }
 

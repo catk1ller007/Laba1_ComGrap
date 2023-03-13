@@ -50,6 +50,7 @@
     <Compile Include="Filtres\Horizont.cs" />
     <Compile Include="Filtres\InvertFilter.cs" />
     <Compile Include="Filtres\LowerYarkost.cs" />
+    <Compile Include="Filtres\PreferenceColorFilter.cs" />
     <Compile Include="Filtres\rotate.cs" />
     <Compile Include="Filtres\Sepia.cs" />
     <Compile Include="Filtres\Steklo.cs" />
