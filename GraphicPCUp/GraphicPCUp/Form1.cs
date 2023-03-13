@@ -25,6 +25,8 @@ using Dilat;
 using Priwit;
 using Shara;
 using Cray;
+using Tisnenie;
+using Lin;
 namespace GraphicPCUp
 {
     public partial class Form1 : Form
@@ -110,6 +112,7 @@ namespace GraphicPCUp
             progressBar1.Value = 0;
         }
 
+
         // ------------------------------------------------------------------------------// 
         // ---------------------------------- Фильтры -----------------------------------//
         private void инверсияToolStripMenuItem_Click(object sender, EventArgs e)
@@ -130,6 +133,44 @@ namespace GraphicPCUp
             Filtres filter = new Sepia();
             backgroundWorker1.RunWorkerAsync(filter);
         }
+        private void увеличениеЯркостиToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            Filtres filter = new YvelichenitYarkosti();
+            backgroundWorker1.RunWorkerAsync(filter);
+        }
+        private void уменьшениеЯркостиToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Filtres filter = new YemshenitYarkosti();
+            backgroundWorker1.RunWorkerAsync(filter);
+        }
+        private void стеклоToolStripMenuItem_Click_1(object sender, EventArgs e)
+        {
+            Filtres filter = new Steklo();
+            backgroundWorker1.RunWorkerAsync(filter);
+        }
+        private void вертикальныеВолныToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Filtres filter = new VerticalWaveFilter(imageResult, 10, (float)2);
+            backgroundWorker1.RunWorkerAsync(filter);
+        }
+        private void горизонтальныеВолныToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Filtres filter = new HorizontalWaveFilter(imageResult, 10, (float)2);
+            backgroundWorker1.RunWorkerAsync(filter);
+        }
+        private void переносToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            Filtres filter = new transfer();
+            backgroundWorker1.RunWorkerAsync(filter);
+        }
+        private void поворотToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            Filtres filter = new turn();
+            backgroundWorker1.RunWorkerAsync(filter);
+        }
+
+
+        //-------------------- Матричные фильтры ----------------------//
         private void размытиеToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Filtres filter = new BlurFilter();
@@ -145,110 +186,14 @@ namespace GraphicPCUp
             Filtres filter = new SobelFilter();
             backgroundWorker1.RunWorkerAsync(filter);
         }
-        private void увеличениеЯркостиToolStripMenuItem1_Click(object sender, EventArgs e)
-        {
-            Filtres filter = new YvelichenitYarkosti();
-            backgroundWorker1.RunWorkerAsync(filter);
-        }
-        private void уменьшениеЯркостиToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            Filtres filter = new YemshenitYarkosti();
-            backgroundWorker1.RunWorkerAsync(filter);
-        }
         private void резкостьToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Filtres filter = new Rezkost();
             backgroundWorker1.RunWorkerAsync(filter);
         }
-        private void вертикальныеВолныToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            Filtres filter = new VerticalWaveFilter(imageResult, 10, (float)2);
-            backgroundWorker1.RunWorkerAsync(filter);
-        }
-        private void горизонтальныеВолныToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            Filtres filter = new HorizontalWaveFilter(imageResult, 10, (float)2);
-            backgroundWorker1.RunWorkerAsync(filter);
-        }
-        private void глобальноеРастяжениеГистограммыToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-
-            Bitmap sourceImage = imageOriginal;
-
-            int srcColorminR = 255;
-            int srcColormaxR = 0;
-            int srcColorminG = 255;
-            int srcColormaxG = 0;
-            int srcColorminB = 255;
-            int srcColormaxB = 0;
-
-            for (int i = 0; i < sourceImage.Width; i++)
-            {
-                for (int j = 0; j < sourceImage.Height; j++)
-                {
-                    if ((sourceImage.GetPixel(i, j).R) > srcColormaxR)
-                        srcColormaxR = sourceImage.GetPixel(i, j).R;
-                    if ((sourceImage.GetPixel(i, j).G) > srcColormaxG)
-                        srcColormaxG = sourceImage.GetPixel(i, j).G;
-                    if ((sourceImage.GetPixel(i, j).B) > srcColormaxB)
-                        srcColormaxB = sourceImage.GetPixel(i, j).B;
-
-                    if ((sourceImage.GetPixel(i, j).R) < srcColorminR)
-                        srcColorminR = sourceImage.GetPixel(i, j).R;
-                    if ((sourceImage.GetPixel(i, j).G) < srcColorminG)
-                        srcColorminG = sourceImage.GetPixel(i, j).G;
-                    if ((sourceImage.GetPixel(i, j).B) < srcColorminB)
-                        srcColorminB = sourceImage.GetPixel(i, j).B;
-                }
-            }
-
-            Bitmap resultImage = new Bitmap(sourceImage.Width, sourceImage.Height);
-
-            for (int i = 0; i < sourceImage.Width; i++)
-            {
-                for (int j = 0; j < sourceImage.Height; j++)
-                {
-                    resultImage.SetPixel(i, j, globalCalculateNewPixelColor(sourceImage, i, j, srcColorminR, srcColormaxR, srcColorminG, srcColormaxG, srcColorminB, srcColormaxB));
-                }
-            }
-
-            pictureBox2.Image = resultImage;
-            pictureBox1.Refresh();
-            pictureBox2.Refresh();
-        }
-        private void стеклоToolStripMenuItem_Click_1(object sender, EventArgs e)
-        {
-            Filtres filter = new Steklo();
-            backgroundWorker1.RunWorkerAsync(filter);
-        }
-        private void переносToolStripMenuItem1_Click(object sender, EventArgs e)
-        {
-            Filtres filter = new transfer();
-            backgroundWorker1.RunWorkerAsync(filter);
-        }
         private void motionBlurToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Filtres filter = new MotionBlur();
-            backgroundWorker1.RunWorkerAsync(filter);
-        }
-        private void dilatonToolStripMenuItem_Click_1(object sender, EventArgs e)
-        {
-            Filtres filter = new Dilation();
-            backgroundWorker1.RunWorkerAsync(filter);
-        }
-        private void erosionToolStripMenuItem_Click_1(object sender, EventArgs e)
-        {
-            Filtres filter = new Erosion();
-            backgroundWorker1.RunWorkerAsync(filter);
-        }
-        private void openingToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            Filtres filter = new Opening();
-            backgroundWorker1.RunWorkerAsync(filter);
-        }
-        private void closingToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            Filtres filter = new Closing();
             backgroundWorker1.RunWorkerAsync(filter);
         }
         private void приToolStripMenuItem_Click(object sender, EventArgs e)
@@ -263,20 +208,62 @@ namespace GraphicPCUp
         }
         private void светКрайToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Canny_edge_detection canny = new Canny_edge_detection();
-
-            Bitmap bmp = new Bitmap(pictureBox1.Image);
-            Bitmap resultImahe = canny.edge_detection_by_Canny(bmp);
-
-            pictureBox2.Image = resultImahe;
-            pictureBox2.Invalidate();
+            Filtres filtres = new BrightBorders();
+            backgroundWorker1.RunWorkerAsync(filtres);
         }
-        private void поворотToolStripMenuItem1_Click(object sender, EventArgs e)
+        private void тиснениеToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Filtres filter = new turn();
+            Filtres filter = new Embossing();
             backgroundWorker1.RunWorkerAsync(filter);
         }
 
+        //-------------------- Глобальные фильтры ----------------------//
+        private void глобальноеРастяжениеГистограммыToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Filtres filter = new LinearStretching();
+            backgroundWorker1.RunWorkerAsync(filter);
+        }
+
+
+        //-------------------- Мат морфология фильтр ----------------------//
+        private void dilatonToolStripMenuItem_Click_1(object sender, EventArgs e)
+        {
+            Filtres filter = new MorphologicalDilationFilter();
+            backgroundWorker1.RunWorkerAsync(filter);
+        }
+        private void erosionToolStripMenuItem_Click_1(object sender, EventArgs e)
+        {
+            Filtres filter = new MorphologicalErosionFilter();
+            backgroundWorker1.RunWorkerAsync(filter);
+        }
+        private void openingToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Filtres filter = new MorphologicalOpeningFilter();
+            backgroundWorker1.RunWorkerAsync(filter);
+        }
+        private void closingToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Filtres filter = new MorphologicalClosingFilter();
+            backgroundWorker1.RunWorkerAsync(filter);
+        }
+        private void topHatToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            Filtres filter = new MorphologicalTopHatFilter();
+            backgroundWorker1.RunWorkerAsync(filter);
+        }
+        private void blackHatToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            Filtres filter = new MorphologicalBlackHatFilter();
+            backgroundWorker1.RunWorkerAsync(filter);
+        }
+        private void gradientToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Filtres filter = new MorphologicalGradFilter();
+            backgroundWorker1.RunWorkerAsync(filter);
+        }
+        
+
+        // -------------------------Кнопки-------------------------//
         // Очистка
         private void button1_Click(object sender, EventArgs e)
         {
@@ -290,120 +277,5 @@ namespace GraphicPCUp
             pictureBox1.Image = imageResult;
             pictureBox2.Image = null; 
         }
-
-        // - Линейное растяжение гистограммы
-        public Color globalCalculateNewPixelColor(Bitmap sourceImage, int x, int y, int srcColorminR, int srcColormaxR, int srcColorminG, int srcColormaxG, int srcColorminB, int srcColormaxB)
-        {
-            Color srcColor = sourceImage.GetPixel(x, y);
-
-            int srcColorR = (255 * (srcColor.R - srcColorminR) / (srcColormaxR - srcColorminR + 1)) % 255;
-            int srcColorG = (255 * (srcColor.G - srcColorminG) / (srcColormaxG - srcColorminG + 1)) % 255;
-            int srcColorB = (255 * (srcColor.B - srcColorminB) / (srcColormaxB - srcColorminB + 1)) % 255;
-
-            return Color.FromArgb(srcColorR, srcColorG, srcColorB);
-        }
-
-        
     }
-}
-
-
-
-
-namespace LabaOneGraphics
-{
-    //abstract class MorphologiFilters : MatrixFilter
-    //    {
-    //        protected int size = 3;
-    //        protected int rad = 1;
-    //        protected Color white = Color.FromArgb(255, 255, 255);
-    //        protected Color black = Color.FromArgb(0, 0, 0);
-
-    //        protected int[,] kernel = new int[3, 3] {
-    //        {1,1,1},
-    //        {1,1,1},
-    //        {1,1,1},
-    //        };
-
-    //        protected MorphologiFilters() { }
-    //        public MorphologiFilters(int[,] kernel)
-    //        {
-    //            this.kernel = kernel;
-    //        }
-
-    //        public int Clamp(int value, int min, int max)
-    //        {
-    //            if (value < min)
-    //            {
-    //                return min;
-    //            }
-    //            if (value > max)
-    //            {
-    //                return max;
-    //            }
-
-    //            return value;
-    //        }
-
-    //        abstract protected bool getCond(Bitmap sourceImage, int i, int j);
-    //        abstract protected void setPixels(Bitmap sourceImage, Bitmap resultImage, int i, int j);
-    //        abstract protected Bitmap setStartImage(Bitmap sourceImage);
-
-    //        public Bitmap ProcessImage(Bitmap sourceImage, BackgroundWorker worker)
-    //        {
-    //            Bitmap resultImage = new Bitmap(setStartImage(sourceImage));
-
-    //            for (int i = rad; i < sourceImage.Width - rad; i++)
-    //            {
-    //                for (int j = rad; j < sourceImage.Height - rad; j++)
-    //                {
-    //                    worker.ReportProgress((int)((float)i / resultImage.Width + 100));
-
-    //                    if (worker.CancellationPending)
-    //                    {
-    //                        return null;
-    //                    }
-    //                    if (getCond(sourceImage, i, j))
-    //                    {
-    //                        setPixels(sourceImage, resultImage, i, j);
-    //                    }
-    //                }
-    //            }
-    //            return resultImage;
-    //        }
-
-    //    }
-    class Opening : Filtres
-    {
-        protected override Color calculateNewPixelColor(Bitmap sourceImage, int x, int y)
-        {
-            return sourceImage.GetPixel(x, y);
-        }
-        public new Bitmap ProccesImage(Bitmap sourceImage, BackgroundWorker worker)
-        {
-            Filtres Erosion = new Erosion();
-            Filtres Dilation = new Dilation();
-            Bitmap resultImage = new Bitmap(sourceImage.Width, sourceImage.Height);
-            resultImage = Erosion.ProccesImage(sourceImage, worker);
-            resultImage = Dilation.ProccesImage(resultImage, worker);
-            return resultImage;
-        }
-    }
-    class Closing : Filtres
-    {
-        protected override Color calculateNewPixelColor(Bitmap sourceImage, int x, int y)
-        {
-            throw new NotImplementedException();
-        }
-        public new Bitmap ProccesImage(Bitmap sourceImage, BackgroundWorker worker)
-        {
-            Filtres Erosion = new Erosion();
-            Filtres Dilation = new Dilation();
-            Bitmap resultImage = new Bitmap(sourceImage.Width, sourceImage.Height);
-            resultImage = Dilation.ProccesImage(sourceImage, worker);
-            resultImage = Erosion.ProccesImage(resultImage, worker);
-            return resultImage;
-        }
-    }
-
 }

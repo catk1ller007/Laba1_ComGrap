@@ -22,10 +22,10 @@ namespace Trasform
                 return Color.Black;
             }
 
-            //if (newX == 0 ||newY==0)
-            //{
-            //    return Color.Black;
-            //}
+            if (newX == 0 || newY == 0)
+            {
+                return Color.Black;
+            }
 
             return sourceImage.GetPixel(newX, newY);
         }
