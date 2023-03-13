@@ -5,27 +5,6 @@ using Template;
 
 namespace LabaOneGraphics
 {
-    class MorphologicalFilters : Filtres
-    {
-        protected double[,] structuring_element = null;
-        protected int n;
-        protected int m;
-
-        public MorphologicalFilters()
-        {
-            structuring_element = new double[,] {
-                { 1, 1, 1 },
-                { 1, 1, 1 },
-                { 1, 1, 1 } };
-            n = structuring_element.GetLength(0) / 2;
-            m = structuring_element.GetLength(1) / 2;
-        }
-
-        protected override Color calculateNewPixelColor(Bitmap sourceImage, int x, int y)
-        {
-            return Color.FromArgb(0, 0, 0);
-        }
-    }
     class MorphologicalDilationFilter : MorphologicalFilters
     {
         protected override Color calculateNewPixelColor(Bitmap sourceImage, int x, int y)
